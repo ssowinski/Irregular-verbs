@@ -6,6 +6,7 @@
 //  Copyright © 2015 Slawomir Sowinski. All rights reserved.
 //
 
+
 import UIKit
 
 @UIApplicationMain
@@ -15,7 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window = UIWindow()
+        self.window!.rootViewController = UIViewController()
+        self.window!.backgroundColor = UIColor.redColor()
+        self.window!.makeKeyAndVisible()
         return true
     }
 

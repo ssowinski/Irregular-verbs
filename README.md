@@ -21,7 +21,7 @@ When we set a viewController as main window rootViewController,this VC main view
 To show window content (app’s interface) we have to call window method makeKeyAndVisible.
 
 ##### UIWindow in App with storyboard
-Main storyboard name is set in **Info.plist** key “Main storyboard file base name” (*<key>UIMainStoryboardFile</key>*) 
+Main storyboard name is set in **Info.plist** key “Main storyboard file base name” (```<key>UIMainStoryboardFile</key>```) 
 
 *Steps performed automatically (behind the scenes)*
 
@@ -38,7 +38,7 @@ Main storyboard name is set in **Info.plist** key “Main storyboard file base n
 1. Edit the target. In the General pane, select “Main” in the Main Interface field and delete it (and press Tab to set this change).
 2. Delete Main.storyboard and ViewController.swift from the project.
 3. Delete the entire content of AppDelegate.swift.
-4. Edit AppDelegate.swift as below to obtain minimal working app.
+4. Edit AppDelegate.swift as below to create basic working app without storyboard.
 ```sh
 import UIKit
 
