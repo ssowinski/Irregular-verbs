@@ -11,6 +11,7 @@
 		B38D8E1F1C22182200F1CEB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38D8E1E1C22182200F1CEB7 /* Assets.xcassets */; };
 		B38D8E221C22182200F1CEB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B38D8E201C22182200F1CEB7 /* LaunchScreen.storyboard */; };
 		B38D8E2A1C22186C00F1CEB7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B38D8E291C22186C00F1CEB7 /* README.md */; };
+		B38D8E2C1C2364A000F1CEB7 /* WordsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		B38D8E211C22182200F1CEB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B38D8E231C22182200F1CEB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B38D8E291C22186C00F1CEB7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				B38D8E1E1C22182200F1CEB7 /* Assets.xcassets */,
 				B38D8E201C22182200F1CEB7 /* LaunchScreen.storyboard */,
 				B38D8E231C22182200F1CEB7 /* Info.plist */,
+				B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */,
 			);
 			path = "Irregular verbs";
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			files = (
 				B38D8E2A1C22186C00F1CEB7 /* README.md in Sources */,
 				B38D8E181C22182200F1CEB7 /* AppDelegate.swift in Sources */,
+				B38D8E2C1C2364A000F1CEB7 /* WordsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

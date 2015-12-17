@@ -64,3 +64,79 @@ return true
 >If you do not use this attribute, supply a main.swift file with a main function that calls the UIApplicationMain(_:_:_:) function. For example, if your app uses a custom subclass of UIApplication as its principal class, call the UIApplicationMain(_:_:_:) function instead of using this attribute. 
 
 
+### UIView
+A view has only one superview ```var superview: UIView?```, but it can have many (or zero) subviews ```var subviews: [UIView]``` The order in the subviews array matters, those later in the array are on top of those earlier.
+
+A view has property ```var window: UIWindow?``` is nil if the view has not yet been added to a window (view is not part of the interface)
+
+A view can clip its subviews to its own bounds or not (the default is not to) ```var clipsToBounds: Bool``` If set to false, subviews whose frames extend beyond the visible bounds of the receiver are not clipped. The default value is *false*.
+
+```addSubview(aView: UIView)``` // sent to aView’s (soon to be) superview
+```removeFromSuperview()``` // this is sent to the view you want to remove (not its superview)
+
+#####UIView’s initializer
+-initializer if the UIView is created in code ```init(frame: CGRect)```
+-initializer if the UIView comes out of a storyboard ```init(coder: NSCoder)```
+
+If you need an initializer, implement them both …
+```sh
+func setup() { … }
+
+override init(frame: CGRect) { // a designed initializer
+super.init(frame: frame)
+setup()
+}
+
+required init(coder aDecoder: NSCoder) { // a required initializer
+super.init(coder: aDecoder)
+setup()
+}
+```
+
+###ViewController
+Relationships between view controllers:
+
+- *Parentage - parent/child* (containment)
+A view controller can contain another view controller. Parent view controller (eg. UINavigationController) with a child view controller.
+
+- *Presentation* (modal views)
+A view controller can present another view controller. The first view controller is the presenting view controller (not the parent) of the second; the second view controller is the presented view controller (not a child) of the first.
+
+View controllers load their views lazily. Accessing the view property for the first time loads or creates the view controller’s views. There are several ways to specify the views for a view controller:
+- The view may be created in the view controller’s own code, manually.
+- The view may be created as an empty generic view, automatically.
+- The view may be created in its own separate nib.
+- The view may be created in a nib, which is the same nib from which the view controller itself is instantiated.
+
+Do not confuse *loadView* with *viewDidLoad*. 
+In *loadView* method, create your view hierarchy programmatically and assign the root view of that hierarchy to the view controller’s view property. *viewDidLoad* is called afterward, when the view is set.
+
+```sh
+import UIKit
+
+class WordsListViewController: UIViewController {
+
+override func loadView() {
+    let view = UIView()
+    self.view = view
+    }
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.view.backgroundColor = UIColor.blueColor()
+
+    let label = UILabel()
+    label.text = "Hello, World!"
+    label.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activateConstraints([
+    label.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor),
+    label.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor),
+    ])
+
+    self.view.addSubview(label)
+    }
+}
+```sh
+
+If we don't override the loadView function, then UIViewController’s default implementation of loadView creates a generic UIView object and assigns it to self.view. 
