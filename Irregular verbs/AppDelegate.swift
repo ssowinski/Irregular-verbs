@@ -16,8 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow()
-        self.window!.rootViewController = WordsListViewController()
-//        self.window!.backgroundColor = UIColor.redColor()
+        
+        let model = VerbsModel()
+        let wordsListViewController = WordsListViewController(verbsModel: model)
+        let navigationViewController = UINavigationController(rootViewController : wordsListViewController)
+        self.window!.rootViewController = navigationViewController
         self.window!.makeKeyAndVisible()
         return true
     }

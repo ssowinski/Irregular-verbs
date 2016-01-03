@@ -75,8 +75,8 @@ A view can clip its subviews to its own bounds or not (the default is not to) ``
 ```removeFromSuperview()``` // this is sent to the view you want to remove (not its superview)
 
 #####UIView’s initializer
--initializer if the UIView is created in code ```init(frame: CGRect)```
--initializer if the UIView comes out of a storyboard ```init(coder: NSCoder)```
+- initializer if the UIView is created in code ```init(frame: CGRect)```
+- initializer if the UIView comes out of a storyboard ```init(coder: NSCoder)```
 
 If you need an initializer, implement them both …
 ```sh
@@ -93,13 +93,102 @@ setup()
 }
 ```
 
+#####Creating constraints in code (move to UIView section) 
+
+```sh
+var translatesAutoresizingMaskIntoConstraints: Bool
+```
+If this property’s value is true, the system creates a set of constraints that duplicate the behavior specified by the view’s autoresizing mask. This also lets you modify the view’s size and location using the view’s frame, bounds, or center properties, allowing you to create a static, frame-based layout within Auto Layout. f you want to use Auto Layout to dynamically calculate the size and position of your view, you must set this property to false, and then provide a non ambiguous, nonconflicting set of constraints for the view.
+
+
+NSLayoutConstraint initializer init(item: attribute: relatedBy: toItem: attribute: multiplier: constant:)
+```sh
+view1.addConstraint(
+NSLayoutConstraint(item: view2, attribute: .Leading, relatedBy: .Equal, toItem: view1, attribute: .Leading, multiplier: 1, constant: 0)
+)
+
+view1.addConstraint(
+NSLayoutConstraint(item: view2, attribute: .Trailing, relatedBy: .Equal, toItem: view1, attribute: .Trailing, multiplier: 1, constant: 0)
+)
+```
+
+*Anchor notation*
+
+anchor properties of a UIView:
+- topAnchor, bottomAnchor
+- leftAnchor, rightAnchor, leadingAnchor, trailingAnchor
+- centerXAnchor, centerYAnchor
+- firstBaselineAnchor, lastBaselineAnchor
+
+constraint-forming methods:
+- constraintEqualToConstant:
+- constraintGreaterThanOrEqualToConstant:
+- constraintLessThanOrEqualToConstant:
+- constraintEqualToAnchor:
+- constraintGreaterThanOrEqualToAnchor:
+- constraintLessThanOrEqualToAnchor:
+- constraintEqualToAnchor:constant:
+- constraintGreaterThanOrEqualToAnchor:constant:
+- constraintLessThanOrEqualToAnchor:constant:
+- constraintEqualToAnchor:multiplier:
+- constraintGreaterThanOrEqualToAnchor:multiplier:
+- constraintLessThanOrEqualToAnchor:multiplier:
+- constraintEqualToAnchor:multiplier:constant:
+- constraintGreaterThanOrEqualToAnchor:multiplier:constant:
+- constraintLessThanOrEqualToAnchor:multiplier:constant:
+
+```sh
+class func activateConstraints(_ constraints: [NSLayoutConstraint])
+```
+
+```sh
+NSLayoutConstraint.activateConstraints([
+view2.leadingAnchor.constraintEqualToAnchor(view1.leadingAnchor),
+view2.trailingAnchor.constraintEqualToAnchor(view1.trailingAnchor),
+view2.topAnchor.constraintEqualToAnchor(view1.topAnchor),
+view2.heightAnchor.constraintEqualToConstant(10),
+view3.widthAnchor.constraintEqualToConstant(20),
+view3.heightAnchor.constraintEqualToConstant(20),
+view3.trailingAnchor.constraintEqualToAnchor(view1.trailingAnchor),
+view3.bottomAnchor.constraintEqualToAnchor(view1.bottomAnchor)
+])
+```
+
+Autolayout is implemented behind the scenes in layoutSubviews; in effect, constraints allow you to write sophisticated layoutSubviews functionality without code.
+
+*Visual format notation*
+```sh
+let d = ["v2":v2,"v3":v3]
+NSLayoutConstraint.activateConstraints([
+NSLayoutConstraint.constraintsWithVisualFormat(
+"H:|[v2]|", options: [], metrics: nil, views: d),
+NSLayoutConstraint.constraintsWithVisualFormat(
+"V:|[v2(10)]", options: [], metrics: nil, views: d),
+NSLayoutConstraint.constraintsWithVisualFormat(
+"H:[v3(20)]|", options: [], metrics: nil, views: d),
+NSLayoutConstraint.constraintsWithVisualFormat(
+"V:[v3(20)]|", options: [], metrics: nil, views: d)
+].flatten().map{$0})
+```
+
+
+
+
+*SnapKit* is a DSL to make Auto Layout easy http://snapkit.io
+
+Autoresizing is the pre-iOS 6 way of performing layout automatically. When its superview is resized, a subview will respond in accordance with the rules prescribed by its own *autoresizingMask* property value.
+
+
+
+
+
 ###ViewController
 Relationships between view controllers:
 
-- *Parentage - parent/child* (containment)
+- **Parentage - parent/child** (containment)
 A view controller can contain another view controller. Parent view controller (eg. UINavigationController) with a child view controller.
 
-- *Presentation* (modal views)
+- **Presentation** (modal views)
 A view controller can present another view controller. The first view controller is the presenting view controller (not the parent) of the second; the second view controller is the presented view controller (not a child) of the first.
 
 View controllers load their views lazily. Accessing the view property for the first time loads or creates the view controller’s views. There are several ways to specify the views for a view controller:
@@ -137,6 +226,19 @@ override func viewDidLoad() {
     self.view.addSubview(label)
     }
 }
-```sh
+```
 
 If we don't override the loadView function, then UIViewController’s default implementation of loadView creates a generic UIView object and assigns it to self.view. 
+
+#####View Controller Lifecycle
+- Instantiated
+- awakeFromNib (all objects that come out of a storyboard)
+- segue preparation happens
+- outlets get set
+- **viewDidLoad**
+- These pairs will be called each time your Controller’s view goes on/off screen: 
+**viewWillAppear** and **viewDidAppear** ; **viewWillDisappear** and **viewDidDisappear**
+- These “geometry changed” methods might be called at any time after viewDidLoad …
+**viewWillLayoutSubviews** (… then autolayout happens, then …) **viewDidLayoutSubviews**
+- If memory gets low, you might get **didReceiveMemoryWarning**
+
