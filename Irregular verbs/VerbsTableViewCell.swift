@@ -7,26 +7,13 @@
 //
 
 import UIKit
+import AVFoundation
+
+protocol ButtonShowMoreDelegate {
+    func buttonAction(cell: VerbsTableViewCell)
+}
 
 class VerbsTableViewCell: UITableViewCell {
-    
-    // MARK: - Constants
-    private struct Const {
-        static let Title = "Irregulars Verbs"
-        static let CellReusedIdentifier = "CellReusedIdentifier"
-        static let ShuffleBarButtonTitle = "Shuffle"
-        static let SeparatorLabelText = " \u{2022} "
-        static let Alpha01 : CGFloat = 0.1
-        static let Alpha1 : CGFloat = 1.0
-        
-        static let ColorDarkBlue = UIColor(red:0.33, green:0.55, blue:0.54, alpha:1.0) //#558C89
-        static let ColorBlue = UIColor(red:0.45, green:0.69, blue:0.68, alpha:1.0)    //#74AFAD
-        static let ColorDarkOrange = UIColor(red:0.85, green:0.52, blue:0.23, alpha:1.0)//#D9853B
-        static let ColorGray = UIColor(red:0.93, green:0.93, blue:0.92, alpha:1.0)//#ECECEA
-        static let ColorDarkGray = UIColor(red:0.33, green:0.33, blue:0.32, alpha:1.0)
-        static let ColorDarkerGray = UIColor(red:0.20, green:0.22, blue:0.22, alpha:1.0)
-        static let ColorDarkerGray2 = UIColor(red:0.1, green:0.1, blue:0.1, alpha:1.0)
-    }
     
     // MARK: - Model
     var verb : Verb? {
@@ -35,12 +22,18 @@ class VerbsTableViewCell: UITableViewCell {
         }
     }
     
+    var buttonShowMoreDelegate : ButtonShowMoreDelegate!
+    
     // MARK: - declaration and preparing UI
     private let baseFormLabel = UILabel()
     private let pastTenseLabel = UILabel()
     private let pastParticipleLabel = UILabel()
     private let separatorLabel = UILabel()
     private let containerView = UIView()
+    private let speakButton = UIButton()
+    private let showMoreButton = UIButton()
+    
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     func updateUI(){
         baseFormLabel.text = verb?.getBaseForm()
@@ -55,43 +48,121 @@ class VerbsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layoutUI()
+        createAndActiveConstraints()
+    }
+    
+    func speakButtonAction(sender: UIButton) {
+        speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
         
-        contentView.backgroundColor = Const.ColorDarkGray
+        if let str1 = verb?.getBaseForm(), let str2 = verb?.getPastTense(), let str3 = verb?.getPastParticiple() {
+            let stringToSpeech = str1 + ", " + str2 + ", " + str3
+            let speechUtterance = AVSpeechUtterance(string: stringToSpeech)
+            speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+            //            speechUtterance.rate = 0.35
+            //            speechUtterance.pitchMultiplier = 0.65
+            //            speechUtterance.volume = 0.75
+            speechSynthesizer.speakUtterance(speechUtterance)
+        }
+    }
+    
+    func showMoreAction(sender: UIButton) {
+        buttonShowMoreDelegate?.buttonAction(self)
+        
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: false)
+        if selected {
+            UIView.animateWithDuration(0.5, animations: {
+                self.containerView.backgroundColor = Const.Color.DarkOrange
+                self.speakButton.backgroundColor = Const.Color.Gray
+                self.speakButton.hidden = false
+                
+                self.showMoreButton.backgroundColor = Const.Color.Gray
+                self.showMoreButton.hidden = false
+            })
+            //             speakButton.backgroundColor = Con.ColorDarkBlue
+        } else {
+            self.speakButton.hidden = true
+            self.showMoreButton.hidden = true
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        containerView.layer.cornerRadius = containerView.bounds.height/2
+        speakButton.layer.cornerRadius = speakButton.bounds.height/2
+        showMoreButton.layer.cornerRadius = showMoreButton.bounds.height/2
+    }
+    
+    private func layoutUI(){
+        contentView.backgroundColor = Const.Color.DarkGray
         
         selectedBackgroundView = UIView()
-        selectedBackgroundView?.backgroundColor = Const.ColorDarkGray
+        selectedBackgroundView?.backgroundColor = Const.Color.DarkGray
         
-        containerView.backgroundColor = Const.ColorDarkerGray
-     
+        containerView.backgroundColor = Const.Color.DarkerGray
+        speakButton.setImage(UIImage(named: Const.String.SpeakButtonImg), forState: UIControlState.Normal)
+        speakButton.addTarget(self, action: "speakButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        speakButton.hidden = true
+        
+        showMoreButton.setImage(UIImage(named: Const.String.ShowMoreButtonImg), forState: .Normal)
+        showMoreButton.addTarget(self, action: "showMoreAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        showMoreButton.hidden = true
+        
+        //        speakButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        //        speakButton.setTitleColor(UIColor.brownColor(), forState: UIControlState.Highlighted)
+        
         baseFormLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         pastTenseLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         separatorLabel.font = pastTenseLabel.font
         pastParticipleLabel.font = pastTenseLabel.font
-        separatorLabel.text = Const.SeparatorLabelText
+        separatorLabel.text = Const.String.SeparatorLabelText
         baseFormLabel.textColor = UIColor.whiteColor()
-        pastTenseLabel.textColor = Const.ColorDarkerGray2
+        pastTenseLabel.textColor = Const.Color.DarkestGray
         separatorLabel.textColor = pastTenseLabel.textColor
         pastParticipleLabel.textColor = pastTenseLabel.textColor
         pastTenseLabel.textAlignment = .Right
+        pastParticipleLabel.adjustsFontSizeToFitWidth = true
+        pastParticipleLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
+        pastTenseLabel.adjustsFontSizeToFitWidth = true
+        pastTenseLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
         
         contentView.addSubview(containerView)
+        containerView.addSubview(speakButton)
+        containerView.addSubview(showMoreButton)
         containerView.addSubview(baseFormLabel)
         containerView.addSubview(pastTenseLabel)
         containerView.addSubview(separatorLabel)
         containerView.addSubview(pastParticipleLabel)
-        
+    }
+    
+    private func createAndActiveConstraints(){        
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        speakButton.translatesAutoresizingMaskIntoConstraints = false
+        showMoreButton.translatesAutoresizingMaskIntoConstraints = false
         baseFormLabel.translatesAutoresizingMaskIntoConstraints = false
         separatorLabel.translatesAutoresizingMaskIntoConstraints = false
         pastTenseLabel.translatesAutoresizingMaskIntoConstraints = false
         pastParticipleLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        
         NSLayoutConstraint.activateConstraints([
-            
             containerView.topAnchor.constraintEqualToAnchor(contentView.layoutMarginsGuide.topAnchor),
             containerView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
             containerView.leadingAnchor.constraintEqualToAnchor(contentView.layoutMarginsGuide.leadingAnchor),
             containerView.trailingAnchor.constraintEqualToAnchor(contentView.layoutMarginsGuide.trailingAnchor),
+            
+            speakButton.heightAnchor.constraintEqualToAnchor(containerView.heightAnchor, multiplier: Const.Size.ButtonHeightScaleFactor),
+            speakButton.widthAnchor.constraintEqualToAnchor(speakButton.heightAnchor),
+            speakButton.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor),
+            speakButton.trailingAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.trailingAnchor),
+            
+            showMoreButton.heightAnchor.constraintEqualToAnchor(speakButton.heightAnchor),
+            showMoreButton.widthAnchor.constraintEqualToAnchor(speakButton.heightAnchor),
+            showMoreButton.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor),
+            showMoreButton.leadingAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.leadingAnchor),
             
             baseFormLabel.topAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.topAnchor),
             baseFormLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor),
@@ -100,28 +171,15 @@ class VerbsTableViewCell: UITableViewCell {
             separatorLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor),
             
             pastTenseLabel.topAnchor.constraintEqualToAnchor(baseFormLabel.bottomAnchor),
-            pastTenseLabel.leadingAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.leadingAnchor),
+            pastTenseLabel.leadingAnchor.constraintEqualToAnchor(showMoreButton.trailingAnchor),
             pastTenseLabel.trailingAnchor.constraintEqualToAnchor(separatorLabel.leadingAnchor),
             pastTenseLabel.bottomAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.bottomAnchor),
-
+            
             pastParticipleLabel.topAnchor.constraintEqualToAnchor(baseFormLabel.bottomAnchor),
             pastParticipleLabel.leadingAnchor.constraintEqualToAnchor(separatorLabel.trailingAnchor ),
-            pastParticipleLabel.trailingAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.trailingAnchor),
+            pastParticipleLabel.trailingAnchor.constraintEqualToAnchor(speakButton.leadingAnchor),
             pastParticipleLabel.bottomAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.bottomAnchor)
             ])
     }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: false)
-        if selected {
-            UIView.animateWithDuration(0.5, animations: {
-                self.containerView.backgroundColor = Const.ColorDarkOrange
-            })
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        containerView.layer.cornerRadius = containerView.bounds.height/2
-    }
+
 }

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Menu_icn.png",
+      "filename" : "BarButtMenu.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Menu_icn@2x.png",
+      "filename" : "BarButtMenu@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Menu_icn@3x.png",
+      "filename" : "BarButtMenu@3x.png",
       "scale" : "3x"
     }
   ],
