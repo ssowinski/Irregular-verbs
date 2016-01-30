@@ -7,39 +7,40 @@
 //
 
 import UIKit
-import AVFoundation
 
 protocol ButtonShowMoreDelegate {
     func buttonAction(cell: VerbsTableViewCell)
 }
+
 
 class VerbsTableViewCell: UITableViewCell {
     
     // MARK: - Model
     var verb : Verb? {
         didSet {
-            updateUI()
+            updateLabelsText()
         }
     }
-    
+
     var buttonShowMoreDelegate : ButtonShowMoreDelegate!
     
-    // MARK: - declaration and preparing UI
-    private let baseFormLabel = UILabel()
-    private let pastTenseLabel = UILabel()
-    private let pastParticipleLabel = UILabel()
-    private let separatorLabel = UILabel()
-    private let containerView = UIView()
-    private let speakButton = UIButton()
-    private let showMoreButton = UIButton()
+    // MARK: - Private declaration (UI & SpeechSynthesizer)
+    private let baseFormLabel : UILabel
+    private let pastTenseLabel : UILabel
+    private let pastParticipleLabel : UILabel
+    private let separatorLabel : UILabel
+    private let containerView : UIView
+    private let speakButton : UIButton
+    private let showMoreButton : UIButton
     
-    private let speechSynthesizer = AVSpeechSynthesizer()
+    private let speechSynthesizer : SpeechSynthesizer
     
-    func updateUI(){
+    private func updateLabelsText(){
         baseFormLabel.text = verb?.getBaseForm()
         pastTenseLabel.text =  verb?.getPastTense()
         pastParticipleLabel.text = verb?.getPastParticiple()
     }
+    
     
     // MARK: - Init
     required init(coder aDecoder: NSCoder) {
@@ -47,30 +48,33 @@ class VerbsTableViewCell: UITableViewCell {
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        baseFormLabel = UILabel()
+        pastTenseLabel = UILabel()
+        pastParticipleLabel = UILabel()
+        separatorLabel = UILabel()
+        containerView = UIView()
+        speakButton = UIButton()
+        showMoreButton = UIButton()
+        speechSynthesizer = SpeechSynthesizer()
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         layoutUI()
         createAndActiveConstraints()
     }
     
+    // MARK - Button action
     func speakButtonAction(sender: UIButton) {
-        speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
-        
         if let str1 = verb?.getBaseForm(), let str2 = verb?.getPastTense(), let str3 = verb?.getPastParticiple() {
-            let stringToSpeech = str1 + ", " + str2 + ", " + str3
-            let speechUtterance = AVSpeechUtterance(string: stringToSpeech)
-            speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-            //            speechUtterance.rate = 0.35
-            //            speechUtterance.pitchMultiplier = 0.65
-            //            speechUtterance.volume = 0.75
-            speechSynthesizer.speakUtterance(speechUtterance)
+            speechSynthesizer.say(str1 + ", " + str2 + ", " + str3)
         }
     }
     
     func showMoreAction(sender: UIButton) {
         buttonShowMoreDelegate?.buttonAction(self)
-        
     }
     
+    // MARK: - Override methods
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: false)
         if selected {
@@ -96,6 +100,8 @@ class VerbsTableViewCell: UITableViewCell {
         showMoreButton.layer.cornerRadius = showMoreButton.bounds.height/2
     }
     
+    
+    // MARK: - Preparing UI 
     private func layoutUI(){
         contentView.backgroundColor = Const.Color.DarkGray
         

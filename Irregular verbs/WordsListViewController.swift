@@ -13,9 +13,17 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Model
     private var verbsModel : VerbsModel
     
+    
+    // MARK: - UI declaration
+    private let verbsTableView : UITableView
+    private let cardView : SingleCardView
+    
     // MARK: - Init
     init(verbsModel : VerbsModel = VerbsModel()) {
         self.verbsModel = verbsModel
+        self.verbsTableView = UITableView()
+        self.cardView = SingleCardView(menuWidth: Const.Size.CardWidth, menuHeight: Const.Size.CardHeight)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -23,20 +31,19 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - declaration and preparing UI
-    private let verbsTableView = UITableView()
-    private let cardView = SingleCardView(menuWidth: Const.Size.CardWidth, menuHeight: Const.Size.CardHeight)
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
-    
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavigationBar()
         layoutUI()
+        
+        verbsModel.fetchVerbs()
+    }
+    
+    // MARK: - preparing UI
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     private func setupNavigationBar() {
@@ -93,6 +100,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
             ])
     }
     
+    // MARK - Button action
     func shuffleAction(sender: UIBarButtonItem) {
         verbsModel.shuffleVerbs()
         verbsTableView.reloadData()
@@ -110,7 +118,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     
-    // MARK: -ButtonShowMoreDelegate Implemantation
+    // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {
         if let indexPath = verbsTableView.indexPathForCell(cell), let verb = verbsModel.getVerb(indexPath.row) {
             cardView.setVerb(verb)
@@ -120,6 +128,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     // MARK: -UITableViewDataSource Implemantation
+    
     //    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     //    {
     //        return 1

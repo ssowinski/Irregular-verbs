@@ -9,14 +9,14 @@
 import Foundation
 
 class VerbsModel {
-    private var verbs = [Verb]()
+    private var verbs : [Verb]
     
     init(){
-        fetchVerbs()
+        verbs = [Verb]()
     }
     
     //declartion function with default parameter values
-    private func fetchVerbs(verbService: VerbService = VerbService()) {
+    func fetchVerbs(verbService: VerbService = VerbService()) {
         verbService.getVerbs(){ [weak self](verbs) -> Void in
             self?.verbs = verbs
         }
@@ -32,6 +32,7 @@ class VerbsModel {
     }
     
     func shuffleVerbs() {
+        guard verbs.count > 0 else { return }
         for i in 0 ..< (verbs.count - 1) {
             let j = Int(arc4random_uniform(UInt32(verbs.count - i))) + i
             if i != j {
