@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WordsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ButtonShowMoreDelegate
+class WordsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ButtonShowMoreDelegate, CardViewContainerDelegate
 {
     // MARK: - Model
     private var verbsModel : VerbsModel
@@ -16,13 +16,11 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: - UI declaration
     private let verbsTableView : UITableView
-    private let cardView : SingleCardView
     
     // MARK: - Init
     init(verbsModel : VerbsModel = VerbsModel()) {
         self.verbsModel = verbsModel
         self.verbsTableView = UITableView()
-        self.cardView = SingleCardView(menuWidth: Const.Size.CardWidth, menuHeight: Const.Size.CardHeight)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -81,37 +79,30 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
         verbsTableView.estimatedRowHeight = Const.Size.EstimatedRowHeight //verbsTableView.rowHeight
         verbsTableView.rowHeight = UITableViewAutomaticDimension
         
-        view.addSubview(cardView)
-        cardView.hidden = true
-        
         verbsTableView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activateConstraints([
             verbsTableView.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor),
             verbsTableView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor),
             verbsTableView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
-            verbsTableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
-            
-            cardView.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor),
-            cardView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor),
-            cardView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
-            cardView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor)
+            verbsTableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor)
             ])
     }
     
     // MARK - Button action
     func shuffleAction(sender: UIBarButtonItem) {
-        verbsModel.shuffleVerbs()
         verbsTableView.reloadData()
+
+        verbsModel.shuffleVerbs()
         let range = NSMakeRange(0, verbsTableView.numberOfSections)
         let sections = NSIndexSet(indexesInRange: range)
         verbsTableView.reloadSections(sections, withRowAnimation: .Left)
     }
     
     func sortAction(sender: UIBarButtonItem) {
-        verbsModel.resetDefaultSort()
         verbsTableView.reloadData()
+
+        verbsModel.resetDefaultSort()
         let range = NSMakeRange(0, verbsTableView.numberOfSections)
         let sections = NSIndexSet(indexesInRange: range)
         verbsTableView.reloadSections(sections, withRowAnimation: .Right)
@@ -120,11 +111,28 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {
-        if let indexPath = verbsTableView.indexPathForCell(cell), let verb = verbsModel.getVerb(indexPath.row) {
-            cardView.setVerb(verb)
-            cardView.showCard()
+//        if let indexPath = verbsTableView.indexPathForCell(cell), let verb = verbsModel.getVerb(indexPath.row) {
+//            cardView.setVerb(verb)
+//            cardView.showCard()
+//        }
+//            cardView.showCard()
+        if let indexPath = verbsTableView.indexPathForCell(cell) {
+            let cardViewContainer = CardViewContainer(frame: self.view.frame, startingIndex: indexPath.row)
+            cardViewContainer.delegat = self
+            self.view.addSubview(cardViewContainer)
         }
-        
+
+    }
+    
+    // MARK: -CardViewContainerDelegate
+    func cardsNumber(cardViewContainer: CardViewContainer) -> Int {
+        return verbsModel.countVerbs()
+    }
+    
+    func cardForIndex(cardViewContainer: CardViewContainer, index: Int) -> UIView {
+        let card = CardView(frame: CGRectMake(0, 0, Const.Size.CardWidth, Const.Size.CardHeight))
+        card.verb = verbsModel.getVerb(index)
+        return card
     }
     
     // MARK: -UITableViewDataSource Implemantation
@@ -157,7 +165,5 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     //        return false
     //    }
     
-    
-    
-    
 }
+

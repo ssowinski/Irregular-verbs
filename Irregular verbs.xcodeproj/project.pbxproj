@@ -17,7 +17,8 @@
 		B3E587C81C56C03100761CC7 /* VerbService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E587C71C56C03100761CC7 /* VerbService.swift */; };
 		B3E587CA1C5816D700761CC7 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E587C91C5816D700761CC7 /* Const.swift */; };
 		B3E6D1621C5CB9E1004FDBB2 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1611C5CB9E1004FDBB2 /* SpeechSynthesizer.swift */; };
-		B3E976721C4A49A000840A1A /* SingleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E976711C4A49A000840A1A /* SingleCardView.swift */; };
+		B3E6D1641C5CCF76004FDBB2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1631C5CCF76004FDBB2 /* CardView.swift */; };
+		B3E6D1661C5CE192004FDBB2 /* CardViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1651C5CE192004FDBB2 /* CardViewContainer.swift */; };
 		B3EBA9331C388A1C0004B5AA /* VerbsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA9321C388A1C0004B5AA /* VerbsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +35,8 @@
 		B3E587C71C56C03100761CC7 /* VerbService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbService.swift; sourceTree = "<group>"; };
 		B3E587C91C5816D700761CC7 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		B3E6D1611C5CB9E1004FDBB2 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
-		B3E976711C4A49A000840A1A /* SingleCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardView.swift; sourceTree = "<group>"; };
+		B3E6D1631C5CCF76004FDBB2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B3E6D1651C5CE192004FDBB2 /* CardViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewContainer.swift; sourceTree = "<group>"; };
 		B3EBA9321C388A1C0004B5AA /* VerbsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +78,8 @@
 				B3E587C91C5816D700761CC7 /* Const.swift */,
 				B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */,
 				B3EBA9321C388A1C0004B5AA /* VerbsTableViewCell.swift */,
-				B3E976711C4A49A000840A1A /* SingleCardView.swift */,
+				B3E6D1631C5CCF76004FDBB2 /* CardView.swift */,
+				B3E6D1651C5CE192004FDBB2 /* CardViewContainer.swift */,
 				B3E587C51C56BD7E00761CC7 /* Verb.swift */,
 				B3E587C71C56C03100761CC7 /* VerbService.swift */,
 				B33198A61C313F6B0041A74F /* VerbsModel.swift */,
@@ -156,15 +159,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E976721C4A49A000840A1A /* SingleCardView.swift in Sources */,
 				B38D8E2A1C22186C00F1CEB7 /* README.md in Sources */,
 				B38D8E181C22182200F1CEB7 /* AppDelegate.swift in Sources */,
 				B3E587C61C56BD7E00761CC7 /* Verb.swift in Sources */,
 				B3E6D1621C5CB9E1004FDBB2 /* SpeechSynthesizer.swift in Sources */,
 				B3E587CA1C5816D700761CC7 /* Const.swift in Sources */,
+				B3E6D1661C5CE192004FDBB2 /* CardViewContainer.swift in Sources */,
 				B3E587C81C56C03100761CC7 /* VerbService.swift in Sources */,
 				B3EBA9331C388A1C0004B5AA /* VerbsTableViewCell.swift in Sources */,
 				B33198A71C313F6B0041A74F /* VerbsModel.swift in Sources */,
+				B3E6D1641C5CCF76004FDBB2 /* CardView.swift in Sources */,
 				B38D8E2C1C2364A000F1CEB7 /* WordsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

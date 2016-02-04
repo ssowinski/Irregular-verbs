@@ -32,8 +32,15 @@ struct Const {
         static let MinimumFontScaleFactor : CGFloat = 0.5
         
         //Single Card View
-        static let CornerRadius : CGFloat = 10
+        static let CornerRadius : CGFloat = 30
         static let AnimationDuration = 0.3
+        
+        //CardViewContainer
+        static let CardBackgroundAlpha05 : CGFloat = 0.6
+        static let Alpha00 : CGFloat = 0.0
+        static let Alpha05 : CGFloat = 0.5
+        static let GravityVexctorTuple : (CGFloat, CGFloat) = (0.0, 10.0)
+        static let SwipeTranslatioToDismissCard : CGFloat = 150
 
     }
     
