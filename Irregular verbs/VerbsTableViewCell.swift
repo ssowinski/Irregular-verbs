@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ButtonShowMoreDelegate {
+protocol ButtonShowMoreDelegate: class {
     func buttonAction(cell: VerbsTableViewCell)
 }
 
@@ -22,7 +22,7 @@ class VerbsTableViewCell: UITableViewCell {
         }
     }
 
-    var buttonShowMoreDelegate : ButtonShowMoreDelegate!
+    weak var buttonShowMoreDelegate : ButtonShowMoreDelegate!
     
     // MARK: - Private declaration (UI & SpeechSynthesizer)
     private let baseFormLabel : UILabel
@@ -99,7 +99,6 @@ class VerbsTableViewCell: UITableViewCell {
         speakButton.layer.cornerRadius = speakButton.bounds.height/2
         showMoreButton.layer.cornerRadius = showMoreButton.bounds.height/2
     }
-    
     
     // MARK: - Preparing UI 
     private func layoutUI(){
@@ -187,5 +186,4 @@ class VerbsTableViewCell: UITableViewCell {
             pastParticipleLabel.bottomAnchor.constraintEqualToAnchor(containerView.layoutMarginsGuide.bottomAnchor)
             ])
     }
-
 }

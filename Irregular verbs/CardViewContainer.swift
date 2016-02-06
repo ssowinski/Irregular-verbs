@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol CardViewContainerDelegate {
+protocol CardViewContainerDelegate: class {
     func cardsNumber(cardViewContainer : CardViewContainer) -> Int
     func cardForIndex(cardViewContainer : CardViewContainer, index: Int) -> UIView
 }
@@ -21,7 +21,7 @@ enum SwipeDirection {
 
 class CardViewContainer: UIView {
     
-    var delegat : CardViewContainerDelegate? {
+    weak var delegat : CardViewContainerDelegate? {
         didSet {
             showCard(currentIndex, swipeDir: .Left)
         }
@@ -38,7 +38,6 @@ class CardViewContainer: UIView {
         super.init(frame: frame)
         self.animator = UIDynamicAnimator(referenceView: self)
         configureView()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,7 +78,7 @@ class CardViewContainer: UIView {
         
         if let card = cardView {
             let gravityBehaviour = UIGravityBehavior(items: [card])
-            gravityBehaviour.gravityDirection = CGVectorMake(Const.Size.GravityVexctorTuple);
+            gravityBehaviour.gravityDirection = CGVectorMake(Const.Size.GravityDownVexctorTuple);
             animator.addBehavior(gravityBehaviour)
             
             let itemBehaviour = UIDynamicItemBehavior(items: [card])
@@ -92,19 +91,19 @@ class CardViewContainer: UIView {
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
-                
-                //                self.alertView = nil
             })
     }
     
     private func dismissCard(card : UIView, swipeDir: SwipeDirection){
         animator.removeAllBehaviors()
         
-        let finishPointX = (swipeDir == .Left ? -card.frame.width : self.frame.width + card.frame.width)
-        let finishPoint = CGPointMake(finishPointX, card.center.y)
-        
+        let gravityBehaviour = UIGravityBehavior(items: [card])
+        let gravityVector = (swipeDir == .Left ? Const.Size.GravityLeftVexctorTuple : Const.Size.GravityRightVexctorTuple)
+        gravityBehaviour.gravityDirection = CGVectorMake(gravityVector);
+        animator.addBehavior(gravityBehaviour)
+      
         UIView.animateWithDuration(Const.Size.AnimationDuration, animations: {
-                card.center = finishPoint
+                card.alpha = Const.Size.Alpha00
             }, completion: {
                 (value: Bool) in
                 card.removeFromSuperview()
@@ -113,7 +112,6 @@ class CardViewContainer: UIView {
                 swipeDir == .Left ? self.currentIndex-- : self.currentIndex++
                 self.showCard(self.currentIndex, swipeDir: swipeDir)
         })
-       
     }
 
     func tap(gesture: UITapGestureRecognizer){
@@ -127,14 +125,17 @@ class CardViewContainer: UIView {
         let translation = gesture.translationInView(self)
         let locationInView = gesture.locationInView(self)
         let locationInCard = gesture.locationInView(card)
-        
-        print("translation:\(translation), locationInView:\(locationInView), locationInCard:\(locationInCard)")
-        
+//        print("translation:\(translation), locationInView:\(locationInView), locationInCard:\(locationInCard)")
+
         switch gesture.state {
         case .Began:
             animator.removeAllBehaviors()
+            let offset = UIOffsetMake(locationInCard.x - CGRectGetMidX(card.bounds), locationInCard.y - CGRectGetMidY(card.bounds));
+            attachmentBehavior = UIAttachmentBehavior(item: card, offsetFromCenter: offset, attachedToAnchor: locationInView)
+            animator.addBehavior(attachmentBehavior)
         case .Changed:
-            card.center = CGPointMake(self.center.x + translation.x, self.center.y + translation.y)
+            attachmentBehavior.anchorPoint = locationInView
+//            card.center = CGPointMake(self.center.x + translation.x, self.center.y + translation.y)
             //        gesture.setTranslation(CGPointZero, inView: self)
         case .Ended:
             animator.removeAllBehaviors()
@@ -149,35 +150,7 @@ class CardViewContainer: UIView {
                 dismissCard(card, swipeDir: .Left)
             }
         default: break
-        }
-        
-        //        if (cardView != nil) {
-        //            let panLocationInView = gesture.locationInView(self)
-        //            let panLocationInCardView = gesture.locationInView(cardView)
-        //
-        //            if gesture.state == UIGestureRecognizerState.Began {
-        //            animator.removeAllBehaviors()
-        //
-        //            let offset = UIOffsetMake(panLocationInCardView.x - CGRectGetMidX(cardView!.bounds), panLocationInCardView.y - CGRectGetMidY(cardView!.bounds));
-        //            attachmentBehavior = UIAttachmentBehavior(item: cardView!, offsetFromCenter: offset, attachedToAnchor: panLocationInView)
-        //
-        //            animator.addBehavior(attachmentBehavior)
-        //        }
-        //            else if gesture.state == UIGestureRecognizerState.Changed {
-        //            attachmentBehavior.anchorPoint = panLocationInView
-        //        }
-        //            else if gesture.state == UIGestureRecognizerState.Ended {
-        //            animator.removeAllBehaviors()
-        //
-        //            let snapBehavior = UISnapBehavior(item: cardView!, snapToPoint: self.center)
-        //            animator.addBehavior(snapBehavior)
-        //
-        //            if gesture.translationInView(self).y > 100 {
-        //                //                    dismissAlert()
-        //            }
-        //            }
-        //        }
-        
+        }        
     }
     
 }

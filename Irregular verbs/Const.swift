@@ -39,19 +39,19 @@ struct Const {
         static let CardBackgroundAlpha05 : CGFloat = 0.6
         static let Alpha00 : CGFloat = 0.0
         static let Alpha05 : CGFloat = 0.5
-        static let GravityVexctorTuple : (CGFloat, CGFloat) = (0.0, 10.0)
-        static let SwipeTranslatioToDismissCard : CGFloat = 150
-
+        static let GravityDownVexctorTuple : (CGFloat, CGFloat) = (0.0, 10.0)
+        static let GravityLeftVexctorTuple : (CGFloat, CGFloat) = (-10.0, 0.0)
+        static let GravityRightVexctorTuple : (CGFloat, CGFloat) = (10.0, 0.0)
+        static let SwipeTranslatioToDismissCard : CGFloat = 100
     }
     
     struct Color {
-        static let Blue = UIColor(red:0.45, green:0.69, blue:0.68, alpha:1.0) //WordListVC View background
-        static let DarkBlue = UIColor(red:0.45, green:0.75, blue:0.75, alpha:1.0) //SingleCardView
-        static let Gray = UIColor(red:0.573, green: 0.282, blue: 0.024, alpha:1.0) //speakButton & showMoreButton background
-        static let DarkGray = UIColor(red:0.33, green:0.33, blue:0.32, alpha:1.0) //cell contentView & selectedBackgroundView background
-        static let DarkerGray = UIColor(red:0.20, green:0.22, blue:0.22, alpha:1.0) //cell containerView background
-        static let DarkestGray = UIColor(red:0.1, green:0.1, blue:0.1, alpha:1.0) //PastTenseLabel
-        static let DarkOrange = UIColor(red:0.85, green:0.52, blue:0.23, alpha:1.0)//cell selected containerView background
+        static let Blue = UIColor(rgb: 0x74AFAD) //WordListVC View background
+        static let Gray = UIColor(rgb: 0x924706) //speakButton & showMoreButton background
+        static let DarkGray = UIColor(rgb: 0x545451) //cell contentView & selectedBackgroundView background
+        static let DarkerGray = UIColor(rgb: 0x333838) //cell containerView background
+        static let DarkestGray = UIColor(rgb: 0x191919) //PastTenseLabel
+        static let DarkOrange = UIColor(rgb: 0xD8843A) //cell selected containerView background
     }
 }
 

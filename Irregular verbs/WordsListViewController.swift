@@ -108,23 +108,16 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
         verbsTableView.reloadSections(sections, withRowAnimation: .Right)
     }
 
-    
     // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {
-//        if let indexPath = verbsTableView.indexPathForCell(cell), let verb = verbsModel.getVerb(indexPath.row) {
-//            cardView.setVerb(verb)
-//            cardView.showCard()
-//        }
-//            cardView.showCard()
         if let indexPath = verbsTableView.indexPathForCell(cell) {
             let cardViewContainer = CardViewContainer(frame: self.view.frame, startingIndex: indexPath.row)
             cardViewContainer.delegat = self
             self.view.addSubview(cardViewContainer)
         }
-
     }
     
-    // MARK: -CardViewContainerDelegate
+    // MARK: -CardViewContainerDelegate Implemantation
     func cardsNumber(cardViewContainer: CardViewContainer) -> Int {
         return verbsModel.countVerbs()
     }

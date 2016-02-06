@@ -1,6 +1,6 @@
 # Irregular verbs - example of app without storyboard
 
-### window - UIWindow
+## window - UIWindow
 Window is a top of app's view hierarchy.
 
 If we'er using storyboard it is initial automatically by the UIApplicationMain function as the app launches.
@@ -64,15 +64,16 @@ return true
 >If you do not use this attribute, supply a main.swift file with a main function that calls the UIApplicationMain(_:_:_:) function. For example, if your app uses a custom subclass of UIApplication as its principal class, call the UIApplicationMain(_:_:_:) function instead of using this attribute. 
 
 
-### UIView
+## UIView
 A view has only one superview ```var superview: UIView?```, but it can have many (or zero) subviews ```var subviews: [UIView]``` The order in the subviews array matters, those later in the array are on top of those earlier.
 
 A view has property ```var window: UIWindow?``` is nil if the view has not yet been added to a window (view is not part of the interface)
 
 A view can clip its subviews to its own bounds or not (the default is not to) ```var clipsToBounds: Bool``` If set to false, subviews whose frames extend beyond the visible bounds of the receiver are not clipped. The default value is *false*.
 
-```addSubview(aView: UIView)``` // sent to aView’s (soon to be) superview
-```removeFromSuperview()``` // this is sent to the view you want to remove (not its superview)
+```addSubview(aView: UIView)``` - sent to aView’s (soon to be) superview
+
+```removeFromSuperview()``` - this is sent to the view you want to remove (not its superview)
 
 #####UIView’s initializer
 - initializer if the UIView is created in code ```init(frame: CGRect)```
@@ -98,7 +99,7 @@ setup()
 ```sh
 var translatesAutoresizingMaskIntoConstraints: Bool
 ```
-If this property’s value is true, the system creates a set of constraints that duplicate the behavior specified by the view’s autoresizing mask. This also lets you modify the view’s size and location using the view’s frame, bounds, or center properties, allowing you to create a static, frame-based layout within Auto Layout. f you want to use Auto Layout to dynamically calculate the size and position of your view, you must set this property to false, and then provide a non ambiguous, nonconflicting set of constraints for the view.
+If this property’s value is true, the system creates a set of constraints that duplicate the behavior specified by the view’s autoresizing mask. This also lets you modify the view’s size and location using the view’s frame, bounds, or center properties, allowing you to create a static, frame-based layout within Auto Layout. If you want to use Auto Layout to dynamically calculate the size and position of your view, you must set this property to false, and then provide a non ambiguous, nonconflicting set of constraints for the view.
 
 
 NSLayoutConstraint initializer init(item: attribute: relatedBy: toItem: attribute: multiplier: constant:)
@@ -171,18 +172,13 @@ NSLayoutConstraint.constraintsWithVisualFormat(
 ].flatten().map{$0})
 ```
 
+>Autoresizing
 
-
+>Autoresizing is the pre-iOS 6 way of performing layout automatically. When its superview is resized, a subview will respond in accordance with the rules prescribed by its own *autoresizingMask* property value.
 
 *SnapKit* is a DSL to make Auto Layout easy http://snapkit.io
 
-Autoresizing is the pre-iOS 6 way of performing layout automatically. When its superview is resized, a subview will respond in accordance with the rules prescribed by its own *autoresizingMask* property value.
-
-
-
-
-
-###ViewController
+##ViewController
 Relationships between view controllers:
 
 - **Parentage - parent/child** (containment)
@@ -241,4 +237,75 @@ If we don't override the loadView function, then UIViewController’s default im
 - These “geometry changed” methods might be called at any time after viewDidLoad …
 **viewWillLayoutSubviews** (… then autolayout happens, then …) **viewDidLayoutSubviews**
 - If memory gets low, you might get **didReceiveMemoryWarning**
+
+##DELEGATION 
+A very important use of protocols, implement “blind communication” between a View and its Controller. I used it to delegate 
+
+1. Create a delegation protocol.
+Defines what the View (CardViewContainer) wants the Controller (WordsListViewController) to take care of.
+
+```sh
+protocol CardViewContainerDelegate: class{
+    func cardsNumber(cardViewContainer : CardViewContainer) -> Int
+    func cardForIndex(cardViewContainer : CardViewContainer, index: Int) -> UIView
+}
+```
+
+2. Create a delegate property in the View (CardViewContainer) whose type is that delegation protocol
+
+```sh
+weak var delegat : CardViewContainerDelegate? {
+    didSet {
+        showCard(currentIndex, swipeDir: .Left)
+    }
+}
+```
+We have to be a little bit careful about delegat because of memory management. When View points Controler and Controler pointer to the View, we create a meory cycle. We used weak to prevent this.
+
+3. Use the delegate property in the View (CardViewContainer) to get/do things it can’t own or control.
+We use delegate in few places, e.g. to get card view in showCard.
+
+```sh
+private func showCard(index: Int, swipeDir: SwipeDirection) {
+    guard let card = delegat?.cardForIndex(self, index: index) else { return }
+    addSubview(card)
+    .
+    .
+    .
+}
+```
+
+4. Controller (WordsListViewController) declares and implements the protocol
+
+```sh
+class WordsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ButtonShowMoreDelegate, CardViewContainerDelegate
+{
+    .
+    .
+    .
+    // MARK: -CardViewContainerDelegate Implemantation
+    func cardsNumber(cardViewContainer: CardViewContainer) -> Int {
+        return verbsModel.countVerbs()
+    }
+
+    func cardForIndex(cardViewContainer: CardViewContainer, index: Int) -> UIView {
+        let card = CardView(frame: CGRectMake(0, 0, Const.Size.CardWidth, Const.Size.CardHeight))
+        card.verb = verbsModel.getVerb(index)
+        return card
+    }
+}
+```
+
+5. Controller (WordsListViewController) sets self as the delegate of the View (CardViewContainer) by setting the property we have created in point 2.
+
+After we create the instance of CardViewContainer, we set self (WordsListViewController) as delegate
+
+```sh
+let cardViewContainer = CardViewContainer(frame: self.view.frame, startingIndex: indexPath.row)
+cardViewContainer.delegat = self
+```
+
+
+
+
 

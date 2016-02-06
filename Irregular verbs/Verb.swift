@@ -6,7 +6,7 @@
 //  Copyright © 2016 Slawomir Sowinski. All rights reserved.
 //
 
-struct Verb {
+struct Verb: Equatable {
     private let baseForm : String
     private let pastTense : String
     private let pastParticiple : String
@@ -30,7 +30,7 @@ struct Verb {
     }
 }
 
-extension Verb: Equatable { }
+//extension Verb: Equatable { }
 func == (lhs: Verb, rhs: Verb) -> Bool {
     return lhs.baseForm == rhs.baseForm && lhs.pastTense == rhs.pastTense && lhs.pastParticiple == rhs.pastParticiple
 }

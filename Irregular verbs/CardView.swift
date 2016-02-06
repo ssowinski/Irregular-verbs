@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol CardViewDelegate {
-    func swipeLeft(card: CardView)
-    func swipeRight(card: CardView)
-}
-
 class CardView : UIView {
     // MARK: - Model
     var verb : Verb? {
@@ -37,6 +32,12 @@ class CardView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func updateLabelsText(){
+        baseFormLabel.text = verb?.getBaseForm()
+        pastTenseLabel.text = verb?.getPastTense()
+        pastParticipleLabel.text = verb?.getPastParticiple()
+    }
+    
     private func configureView(){
         self.backgroundColor = Const.Color.DarkOrange
         self.layer.cornerRadius = Const.Size.CornerRadius
@@ -50,7 +51,7 @@ class CardView : UIView {
         baseFormLabel.textAlignment = .Center
         baseFormLabel.adjustsFontSizeToFitWidth = true
         baseFormLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
-        baseFormLabel.frame = baseFormBackgroundView.frame
+        baseFormLabel.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height/3)
         baseFormBackgroundView.addSubview(baseFormLabel)
         
         let pastTenseBackgroundView = UIView(frame: CGRect(x: 0, y: baseFormBackgroundView.frame.maxY, width: self.frame.width, height: self.frame.height/3))
@@ -59,19 +60,21 @@ class CardView : UIView {
         self.addSubview(pastTenseBackgroundView)
         
         pastTenseLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-        pastTenseLabel.textColor = UIColor.grayColor()
+        pastTenseLabel.textColor = Const.Color.DarkerGray //UIColor.grayColor()
         pastTenseLabel.textAlignment = .Center
         pastTenseLabel.adjustsFontSizeToFitWidth = true
         pastTenseLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
-        pastTenseLabel.frame = pastTenseBackgroundView.frame
+        pastTenseLabel.frame = baseFormLabel.frame
         pastTenseBackgroundView.addSubview(pastTenseLabel)
         
-
+        
+        pastParticipleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        pastParticipleLabel.textColor = UIColor.whiteColor()
+        pastParticipleLabel.textAlignment = .Center
+        pastParticipleLabel.adjustsFontSizeToFitWidth = true
+        pastParticipleLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
+        pastParticipleLabel.frame = CGRect(x: 0, y: pastTenseBackgroundView.frame.maxY, width: self.frame.width, height: self.frame.height/3)
+        self.addSubview(pastParticipleLabel)
     }
     
-    private func updateLabelsText(){
-        baseFormLabel.text = verb?.getBaseForm()
-        pastTenseLabel.text = verb?.getPastTense()
-        pastParticipleLabel.text = verb?.getPastParticiple()
-    }
 }
