@@ -36,7 +36,7 @@ struct Const {
         static let AnimationDuration = 0.3
         
         //CardViewContainer
-        static let CardBackgroundAlpha05 : CGFloat = 0.6
+        static let CardBackgroundAlpha : CGFloat = 0.6
         static let Alpha00 : CGFloat = 0.0
         static let Alpha05 : CGFloat = 0.5
         static let GravityDownVexctorTuple : (CGFloat, CGFloat) = (0.0, 10.0)

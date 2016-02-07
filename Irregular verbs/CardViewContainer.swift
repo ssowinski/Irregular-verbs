@@ -14,7 +14,7 @@ protocol CardViewContainerDelegate: class {
     func cardForIndex(cardViewContainer : CardViewContainer, index: Int) -> UIView
 }
 
-enum SwipeDirection {
+private enum SwipeDirection {
     case Left
     case Right
 }
@@ -46,8 +46,8 @@ class CardViewContainer: UIView {
     
     private func configureView(){
         let alphaBackground = UIView(frame: self.frame)
-        alphaBackground.backgroundColor = UIColor.grayColor()
-        alphaBackground.alpha = Const.Size.CardBackgroundAlpha05
+        alphaBackground.backgroundColor = UIColor.blackColor()
+        alphaBackground.alpha = Const.Size.CardBackgroundAlpha
         addSubview(alphaBackground)
         
 //        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)

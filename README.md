@@ -1,6 +1,10 @@
-# Irregular verbs - example of app without storyboard
+# Irregular verbs - example of simple app without storyboard
 
-## window - UIWindow
+These are my notes, that I have made during developing.
+
+## What's happend in AppDelegate 
+
+##### UIWindow
 Window is a top of app's view hierarchy.
 
 If we'er using storyboard it is initial automatically by the UIApplicationMain function as the app launches.
@@ -63,17 +67,32 @@ return true
 
 >If you do not use this attribute, supply a main.swift file with a main function that calls the UIApplicationMain(_:_:_:) function. For example, if your app uses a custom subclass of UIApplication as its principal class, call the UIApplicationMain(_:_:_:) function instead of using this attribute. 
 
+## App in Portrait mode
+This app is designed to run in portrait mode, to configure the app for this we have to 
 
-## UIView
+1. Select the project in the project navigator and then go to the General tab and make sure only Portrait is checked (Deployment Info section).
+2. Modify Info.plist and find the Supported interface orientations (iPad) entry. Delete all entries for landscape.
+
+## Dealing with views
 A view has only one superview ```var superview: UIView?```, but it can have many (or zero) subviews ```var subviews: [UIView]``` The order in the subviews array matters, those later in the array are on top of those earlier.
 
 A view has property ```var window: UIWindow?``` is nil if the view has not yet been added to a window (view is not part of the interface)
 
 A view can clip its subviews to its own bounds or not (the default is not to) ```var clipsToBounds: Bool``` If set to false, subviews whose frames extend beyond the visible bounds of the receiver are not clipped. The default value is *false*.
 
+Always use **CGFloat** instead of Double or Float for anything to do with a UIView’s coordinate system.
+
+```var bounds: CGRect ``` - the boundaries of where drawing happens a view’s internal drawing space’s origin and size. This is the rectangle containing the drawing space in its own coordinate system
+
+```var center: CGPoint ``` - the center of a UIView in its superview’s coordinate system
+
+```var frame: CGRect ``` - the rect containing a UIView in its superview’s coordinate system
+
 ```addSubview(aView: UIView)``` - sent to aView’s (soon to be) superview
 
 ```removeFromSuperview()``` - this is sent to the view you want to remove (not its superview)
+
+Use frame and/or center to position a UIView
 
 #####UIView’s initializer
 - initializer if the UIView is created in code ```init(frame: CGRect)```
@@ -94,7 +113,7 @@ setup()
 }
 ```
 
-#####Creating constraints in code (move to UIView section) 
+## Creating constraints in code 
 
 ```sh
 var translatesAutoresizingMaskIntoConstraints: Bool
@@ -178,7 +197,7 @@ NSLayoutConstraint.constraintsWithVisualFormat(
 
 *SnapKit* is a DSL to make Auto Layout easy http://snapkit.io
 
-##ViewController
+## About ViewControllers 
 Relationships between view controllers:
 
 - **Parentage - parent/child** (containment)
@@ -238,10 +257,10 @@ If we don't override the loadView function, then UIViewController’s default im
 **viewWillLayoutSubviews** (… then autolayout happens, then …) **viewDidLayoutSubviews**
 - If memory gets low, you might get **didReceiveMemoryWarning**
 
-##DELEGATION 
-A very important use of protocols, implement “blind communication” between a View and its Controller. I used it to delegate 
+## Delegation Pattern
+A very important use of protocols, implement “blind communication” between a View and its Controller. 
 
-1. Create a delegation protocol.
+1.Create a delegation protocol.
 Defines what the View (CardViewContainer) wants the Controller (WordsListViewController) to take care of.
 
 ```sh
@@ -251,7 +270,7 @@ protocol CardViewContainerDelegate: class{
 }
 ```
 
-2. Create a delegate property in the View (CardViewContainer) whose type is that delegation protocol
+2.Create a delegate property in the View (CardViewContainer) whose type is that delegation protocol
 
 ```sh
 weak var delegat : CardViewContainerDelegate? {
@@ -262,7 +281,7 @@ weak var delegat : CardViewContainerDelegate? {
 ```
 We have to be a little bit careful about delegat because of memory management. When View points Controler and Controler pointer to the View, we create a meory cycle. We used weak to prevent this.
 
-3. Use the delegate property in the View (CardViewContainer) to get/do things it can’t own or control.
+3.Use the delegate property in the View (CardViewContainer) to get/do things it can’t own or control.
 We use delegate in few places, e.g. to get card view in showCard.
 
 ```sh
@@ -275,7 +294,7 @@ private func showCard(index: Int, swipeDir: SwipeDirection) {
 }
 ```
 
-4. Controller (WordsListViewController) declares and implements the protocol
+4.Controller (WordsListViewController) declares and implements the protocol
 
 ```sh
 class WordsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ButtonShowMoreDelegate, CardViewContainerDelegate
@@ -296,7 +315,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
 }
 ```
 
-5. Controller (WordsListViewController) sets self as the delegate of the View (CardViewContainer) by setting the property we have created in point 2.
+5.Controller (WordsListViewController) sets self as the delegate of the View (CardViewContainer) by setting the property we have created in point 2.
 
 After we create the instance of CardViewContainer, we set self (WordsListViewController) as delegate
 
@@ -304,6 +323,41 @@ After we create the instance of CardViewContainer, we set self (WordsListViewCon
 let cardViewContainer = CardViewContainer(frame: self.view.frame, startingIndex: indexPath.row)
 cardViewContainer.delegat = self
 ```
+## Bitwise Operators
+
+UIColorExtensions provides convinient init for UIColor
+
+```sh
+extension UIColor {
+    convenience init(rgb: UInt32) {
+        self.init(
+            red: CGFloat((rgb & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgb & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgb & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+            )
+    }
+}
+```
+This is how it works:
+```sh
+let pink: UInt32 = 0xCC6699
+let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
+let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
+let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
+```
+
+This example uses a UInt32 constant called pink to store a Cascading Style Sheets color value for the color pink. The CSS color value #CC6699 is written as 0xCC6699 in Swift’s hexadecimal number representation. This color is then decomposed into its red (CC), green (66), and blue (99) components by the bitwise AND operator (**&**) and the bitwise right shift operator (**>>**).
+
+The red component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0xFF0000. The zeros in 0xFF0000 effectively “mask” the second and third bytes of 0xCC6699, causing the 6699 to be ignored and leaving 0xCC0000 as the result.
+
+This number is then shifted 16 places to the right (>> 16). Each pair of characters in a hexadecimal number uses 8 bits, so a move 16 places to the right will convert 0xCC0000 into 0x0000CC. This is the same as 0xCC, which has a decimal value of 204.
+
+Similarly, the green component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x00FF00, which gives an output value of 0x006600. This output value is then shifted eight places to the right, giving a value of 0x66, which has a decimal value of 102.
+
+Finally, the blue component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x0000FF, which gives an output value of 0x000099. There’s no need to shift this to the right, as 0x000099 already equals 0x99, which has a decimal value of 153.
+
+## Functions & Clouser
 
 
 

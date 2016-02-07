@@ -26,7 +26,7 @@ extension UIColor {
 //let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
 //let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
 //let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
-
+//
 //This example uses a UInt32 constant called pink to store a Cascading Style Sheets color value for the color pink. The CSS color value #CC6699 is written as 0xCC6699 in Swift’s hexadecimal number representation. This color is then decomposed into its red (CC), green (66), and blue (99) components by the bitwise AND operator (&) and the bitwise right shift operator (>>).
 //
 //The red component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0xFF0000. The zeros in 0xFF0000 effectively “mask” the second and third bytes of 0xCC6699, causing the 6699 to be ignored and leaving 0xCC0000 as the result.
