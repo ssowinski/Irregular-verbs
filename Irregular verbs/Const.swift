@@ -26,6 +26,10 @@ struct Const {
         static let CardWidth: CGFloat = 250
         static let CardHeight: CGFloat = 250
         static let EstimatedRowHeight: CGFloat = 100
+        static let TVAnimDuration = 1.1
+        static let TVAnimDelayFactor = 0.05
+        static let TVAnimSpringWithDamping : CGFloat = 0.8
+        static let TVAnimInitialSpringVelocity : CGFloat = 0.0
         
         //VerbsTableViewCell
         static let ButtonHeightScaleFactor : CGFloat = 0.8

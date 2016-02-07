@@ -20,8 +20,20 @@
 		B3E6D1621C5CB9E1004FDBB2 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1611C5CB9E1004FDBB2 /* SpeechSynthesizer.swift */; };
 		B3E6D1641C5CCF76004FDBB2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1631C5CCF76004FDBB2 /* CardView.swift */; };
 		B3E6D1661C5CE192004FDBB2 /* CardViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6D1651C5CE192004FDBB2 /* CardViewContainer.swift */; };
+		B3E78C511C67A68C00A3E876 /* Irregular_verbsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E78C501C67A68C00A3E876 /* Irregular_verbsTests.swift */; };
+		B3E78C591C67A95A00A3E876 /* VerbsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E78C581C67A95A00A3E876 /* VerbsModelTests.swift */; };
 		B3EBA9331C388A1C0004B5AA /* VerbsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA9321C388A1C0004B5AA /* VerbsTableViewCell.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B3E78C531C67A68C00A3E876 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B38D8E0C1C22182200F1CEB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B38D8E131C22182200F1CEB7;
+			remoteInfo = "Irregular verbs";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B33198A61C313F6B0041A74F /* VerbsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbsModel.swift; sourceTree = "<group>"; };
@@ -39,11 +51,22 @@
 		B3E6D1611C5CB9E1004FDBB2 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 		B3E6D1631C5CCF76004FDBB2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B3E6D1651C5CE192004FDBB2 /* CardViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewContainer.swift; sourceTree = "<group>"; };
+		B3E78C4E1C67A68C00A3E876 /* Irregular verbsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Irregular verbsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3E78C501C67A68C00A3E876 /* Irregular_verbsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Irregular_verbsTests.swift; sourceTree = "<group>"; };
+		B3E78C521C67A68C00A3E876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3E78C581C67A95A00A3E876 /* VerbsModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbsModelTests.swift; sourceTree = "<group>"; };
 		B3EBA9321C388A1C0004B5AA /* VerbsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B38D8E111C22182200F1CEB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3E78C4B1C67A68C00A3E876 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -58,6 +81,7 @@
 			children = (
 				B38D8E291C22186C00F1CEB7 /* README.md */,
 				B38D8E161C22182200F1CEB7 /* Irregular verbs */,
+				B3E78C4F1C67A68C00A3E876 /* Irregular verbsTests */,
 				B38D8E151C22182200F1CEB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B38D8E141C22182200F1CEB7 /* Irregular verbs.app */,
+				B3E78C4E1C67A68C00A3E876 /* Irregular verbsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +116,16 @@
 			path = "Irregular verbs";
 			sourceTree = "<group>";
 		};
+		B3E78C4F1C67A68C00A3E876 /* Irregular verbsTests */ = {
+			isa = PBXGroup;
+			children = (
+				B3E78C501C67A68C00A3E876 /* Irregular_verbsTests.swift */,
+				B3E78C521C67A68C00A3E876 /* Info.plist */,
+				B3E78C581C67A95A00A3E876 /* VerbsModelTests.swift */,
+			);
+			path = "Irregular verbsTests";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -111,6 +146,24 @@
 			productReference = B38D8E141C22182200F1CEB7 /* Irregular verbs.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B3E78C4D1C67A68C00A3E876 /* Irregular verbsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3E78C551C67A68C00A3E876 /* Build configuration list for PBXNativeTarget "Irregular verbsTests" */;
+			buildPhases = (
+				B3E78C4A1C67A68C00A3E876 /* Sources */,
+				B3E78C4B1C67A68C00A3E876 /* Frameworks */,
+				B3E78C4C1C67A68C00A3E876 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3E78C541C67A68C00A3E876 /* PBXTargetDependency */,
+			);
+			name = "Irregular verbsTests";
+			productName = "Irregular verbsTests";
+			productReference = B3E78C4E1C67A68C00A3E876 /* Irregular verbsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -124,6 +177,11 @@
 					B38D8E131C22182200F1CEB7 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = L2G8Z3L5L6;
+					};
+					B3E78C4D1C67A68C00A3E876 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = L2G8Z3L5L6;
+						TestTargetID = B38D8E131C22182200F1CEB7;
 					};
 				};
 			};
@@ -141,6 +199,7 @@
 			projectRoot = "";
 			targets = (
 				B38D8E131C22182200F1CEB7 /* Irregular verbs */,
+				B3E78C4D1C67A68C00A3E876 /* Irregular verbsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -152,6 +211,13 @@
 			files = (
 				B38D8E1F1C22182200F1CEB7 /* Assets.xcassets in Resources */,
 				B35450911C66546E0057BF5F /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3E78C4C1C67A68C00A3E876 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,7 +243,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B3E78C4A1C67A68C00A3E876 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3E78C591C67A95A00A3E876 /* VerbsModelTests.swift in Sources */,
+				B3E78C511C67A68C00A3E876 /* Irregular_verbsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B3E78C541C67A68C00A3E876 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B38D8E131C22182200F1CEB7 /* Irregular verbs */;
+			targetProxy = B3E78C531C67A68C00A3E876 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B38D8E241C22182200F1CEB7 /* Debug */ = {
@@ -285,6 +368,30 @@
 			};
 			name = Release;
 		};
+		B3E78C561C67A68C00A3E876 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Irregular verbsTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "nullum.eu.Irregular-verbsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Irregular verbs.app/Irregular verbs";
+			};
+			name = Debug;
+		};
+		B3E78C571C67A68C00A3E876 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Irregular verbsTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "nullum.eu.Irregular-verbsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Irregular verbs.app/Irregular verbs";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -305,6 +412,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B3E78C551C67A68C00A3E876 /* Build configuration list for PBXNativeTarget "Irregular verbsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3E78C561C67A68C00A3E876 /* Debug */,
+				B3E78C571C67A68C00A3E876 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

@@ -89,24 +89,36 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
             ])
     }
     
+    func animateReloadDataInTableView(tableView : UITableView, duration: Double, delay: Double, spring: CGFloat, initSpring:CGFloat) {
+        tableView.reloadData()
+        
+        let cells = tableView.visibleCells
+        let tableViewHeight = tableView.bounds.height
+        
+        for cell in cells {
+            cell.transform = CGAffineTransformMakeTranslation(0, tableViewHeight)
+        }
+        
+        var index = 0
+        
+        for cell in cells {
+            UIView.animateWithDuration(duration, delay: delay * Double(index), usingSpringWithDamping: spring, initialSpringVelocity: initSpring, options: [], animations: {
+                cell.transform = CGAffineTransformIdentity//CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
+    }
+    
     // MARK - Button action
     func shuffleAction(sender: UIBarButtonItem) {
-        verbsTableView.reloadData()
-
         verbsModel.shuffleVerbs()
-        let range = NSMakeRange(0, verbsTableView.numberOfSections)
-        let sections = NSIndexSet(indexesInRange: range)
-        verbsTableView.reloadSections(sections, withRowAnimation: .Left)
+        animateReloadDataInTableView(verbsTableView, duration: Const.Size.TVAnimDuration, delay: Const.Size.TVAnimDelayFactor, spring: Const.Size.TVAnimSpringWithDamping, initSpring: Const.Size.TVAnimInitialSpringVelocity)
     }
     
     func sortAction(sender: UIBarButtonItem) {
-        verbsTableView.reloadData()
-
         verbsModel.resetDefaultSort()
-        let range = NSMakeRange(0, verbsTableView.numberOfSections)
-        let sections = NSIndexSet(indexesInRange: range)
-        verbsTableView.reloadSections(sections, withRowAnimation: .Right)
-    }
+        animateReloadDataInTableView(verbsTableView, duration: Const.Size.TVAnimDuration, delay: Const.Size.TVAnimDelayFactor, spring: Const.Size.TVAnimSpringWithDamping, initSpring: Const.Size.TVAnimInitialSpringVelocity)    }
 
     // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {

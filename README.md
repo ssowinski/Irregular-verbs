@@ -76,6 +76,10 @@ This app is designed to run in portrait mode, to configure the app for this we h
 ## Dealing with views
 A view has only one superview ```var superview: UIView?```, but it can have many (or zero) subviews ```var subviews: [UIView]``` The order in the subviews array matters, those later in the array are on top of those earlier.
 
+```addSubview(aView: UIView)``` - sent to aView’s (soon to be) superview
+
+```removeFromSuperview()``` - this is sent to the view you want to remove (not its superview)
+
 A view has property ```var window: UIWindow?``` is nil if the view has not yet been added to a window (view is not part of the interface)
 
 A view can clip its subviews to its own bounds or not (the default is not to) ```var clipsToBounds: Bool``` If set to false, subviews whose frames extend beyond the visible bounds of the receiver are not clipped. The default value is *false*.
@@ -88,11 +92,17 @@ Always use **CGFloat** instead of Double or Float for anything to do with a UIVi
 
 ```var frame: CGRect ``` - the rect containing a UIView in its superview’s coordinate system
 
-```addSubview(aView: UIView)``` - sent to aView’s (soon to be) superview
-
-```removeFromSuperview()``` - this is sent to the view you want to remove (not its superview)
-
 Use frame and/or center to position a UIView
+
+```var transform: CGAffineTransform ``` - lets us manipulate its view size, position and rotation.
+```sh
+imageView.transform = CGAffineTransformMakeScale(2, 2)
+imageView.transform = CGAffineTransformMakeTranslation(-100, -100)
+imageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+imageView.transform = CGAffineTransformIdentity
+```
+
+The first one makes an image view double in size (width and height), the second move up and left 100 points, the third spin around 180 degrees (the values are expressed in radians), and the fourth one sets the image view's transform back to "identity" – this means "reset."
 
 #####UIView’s initializer
 - initializer if the UIView is created in code ```init(frame: CGRect)```
@@ -357,9 +367,61 @@ Similarly, the green component is obtained by performing a bitwise AND between t
 
 Finally, the blue component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x0000FF, which gives an output value of 0x000099. There’s no need to shift this to the right, as 0x000099 already equals 0x99, which has a decimal value of 153.
 
-## Functions & Clouser
+## Unit Testing in Swift
+To create a new Unit testing target,gGo to File → New → Target → Test (under iOS) → iOS Unit Testing Bundle.
 
+Import with @testable
 
+In your test target, just import the module you want to test using the @testable keyword, the name o module you can find in project settings → Build Settings → Packaging → Product Module Name
 
+Example of simple test
+
+```sh
+import XCTest
+@testable import Irregular_verbs
+
+class VerbsModelTests: XCTestCase {
+
+    func testGetVerbBeforeFetchVerbs() {
+        let verbsModel = VerbsModel()
+        XCTAssertEqual(verbsModel.getVerb(1), nil)
+    }
+
+    func testGetVerbAfterFetchVerbs() {
+        let verbsModel = VerbsModel()
+        verbsModel.fetchVerbs()
+        XCTAssertNotEqual(verbsModel.getVerb(1), nil)
+    }
+}
+```
+
+## Clouser
+
+#####Capture Danger
+We have to be a little bit careful about capturing because of memory management Specifically, we don’t want to create a memory cycle
+Closures capture pointers (i.e. it keeps what they point to in memory)
+If a captured pointer points (directly or indirectly) back at the closure, that’s a problem Because now there will always be a pointer to the closure and to the captured thing Neither will ever be able to leave the heap  
+
+```sh
+class Foo {
+    var action: () -> Void = { } 	//self points to this closure (via its action property). 
+
+    func show(value: Int) { println(“\(value)”) }
+    
+    func setupMyAction() {
+        var x: Int = 0
+        action = { [unowned self] in	// adding [unowned self] prevent memory cycle
+        //Now that reference to self inside the closure will not keep self in memory. 
+        x = x + 1 
+        self.show(x) //closure points to self (memory loop)
+        }
+    }	 
+    func doMyAction10times() { 
+        for i in 1...10 { 
+            action() 
+        } 
+    }
+}
+```
 
 
