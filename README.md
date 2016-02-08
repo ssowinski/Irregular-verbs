@@ -2,9 +2,11 @@
 
 ![app preview](https://github.com/ssowinski/Irregular-verbs/blob/master/appPrev.gif)
 
-These are my notes, that I have made during developing.
+---
 
-## What's happend in AppDelegate 
+# My notes
+
+## AppDelegate 
 
 ##### UIWindow
 Window is a top of app's view hierarchy.
