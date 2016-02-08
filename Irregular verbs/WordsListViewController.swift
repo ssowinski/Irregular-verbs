@@ -118,7 +118,8 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func sortAction(sender: UIBarButtonItem) {
         verbsModel.resetDefaultSort()
-        animateReloadDataInTableView(verbsTableView, duration: Const.Size.TVAnimDuration, delay: Const.Size.TVAnimDelayFactor, spring: Const.Size.TVAnimSpringWithDamping, initSpring: Const.Size.TVAnimInitialSpringVelocity)    }
+        animateReloadDataInTableView(verbsTableView, duration: Const.Size.TVAnimDuration, delay: Const.Size.TVAnimDelayFactor, spring: Const.Size.TVAnimSpringWithDamping, initSpring: Const.Size.TVAnimInitialSpringVelocity)
+    }
 
     // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {
@@ -135,7 +136,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func cardForIndex(cardViewContainer: CardViewContainer, index: Int) -> UIView {
-        let card = CardView(frame: CGRectMake(0, 0, Const.Size.CardWidth, Const.Size.CardHeight))
+        let card = CardView(frame: CGRect(x: 0, y: 0, width: Const.Size.CardWidth, height: Const.Size.CardHeight))
         card.verb = verbsModel.getVerb(index)
         return card
     }

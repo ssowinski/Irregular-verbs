@@ -1,5 +1,7 @@
 # Irregular verbs - example of simple app without storyboard
 
+![app preview](https://github.com/ssowinski/Irregular-verbs/blob/master/appPrev.gif)
+
 These are my notes, that I have made during developing.
 
 ## What's happend in AppDelegate 
@@ -368,11 +370,11 @@ Similarly, the green component is obtained by performing a bitwise AND between t
 Finally, the blue component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x0000FF, which gives an output value of 0x000099. There’s no need to shift this to the right, as 0x000099 already equals 0x99, which has a decimal value of 153.
 
 ## Unit Testing in Swift
-To create a new Unit testing target,gGo to File → New → Target → Test (under iOS) → iOS Unit Testing Bundle.
+To create a new Unit testing target, go to File -> New -> Target -> Test (under iOS) -> iOS Unit Testing Bundle.
 
 Import with @testable
 
-In your test target, just import the module you want to test using the @testable keyword, the name o module you can find in project settings → Build Settings → Packaging → Product Module Name
+In your test target, just import the module you want to test using the @testable keyword, the name o module you can find in project settings -> Build Settings -> Packaging -> Product Module Name
 
 Example of simple test
 
@@ -398,7 +400,7 @@ class VerbsModelTests: XCTestCase {
 ## Clouser
 
 #####Capture Danger
-We have to be a little bit careful about capturing because of memory management Specifically, we don’t want to create a memory cycle
+We have to be careful about capturing because of memory management Specifically, we don’t want to create a memory cycle
 Closures capture pointers (i.e. it keeps what they point to in memory)
 If a captured pointer points (directly or indirectly) back at the closure, that’s a problem Because now there will always be a pointer to the closure and to the captured thing Neither will ever be able to leave the heap  
 

@@ -14,6 +14,7 @@
 		B38D8E1F1C22182200F1CEB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38D8E1E1C22182200F1CEB7 /* Assets.xcassets */; };
 		B38D8E2A1C22186C00F1CEB7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B38D8E291C22186C00F1CEB7 /* README.md */; };
 		B38D8E2C1C2364A000F1CEB7 /* WordsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */; };
+		B3D6F6051C693BF20029E4AF /* appPrev.gif in Resources */ = {isa = PBXBuildFile; fileRef = B3D6F6041C693BF20029E4AF /* appPrev.gif */; };
 		B3E587C61C56BD7E00761CC7 /* Verb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E587C51C56BD7E00761CC7 /* Verb.swift */; };
 		B3E587C81C56C03100761CC7 /* VerbService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E587C71C56C03100761CC7 /* VerbService.swift */; };
 		B3E587CA1C5816D700761CC7 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E587C91C5816D700761CC7 /* Const.swift */; };
@@ -45,6 +46,7 @@
 		B38D8E231C22182200F1CEB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B38D8E291C22186C00F1CEB7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B38D8E2B1C2364A000F1CEB7 /* WordsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsListViewController.swift; sourceTree = "<group>"; };
+		B3D6F6041C693BF20029E4AF /* appPrev.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = appPrev.gif; sourceTree = "<group>"; };
 		B3E587C51C56BD7E00761CC7 /* Verb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Verb.swift; sourceTree = "<group>"; };
 		B3E587C71C56C03100761CC7 /* VerbService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerbService.swift; sourceTree = "<group>"; };
 		B3E587C91C5816D700761CC7 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				B38D8E291C22186C00F1CEB7 /* README.md */,
+				B3D6F6041C693BF20029E4AF /* appPrev.gif */,
 				B38D8E161C22182200F1CEB7 /* Irregular verbs */,
 				B3E78C4F1C67A68C00A3E876 /* Irregular verbsTests */,
 				B38D8E151C22182200F1CEB7 /* Products */,
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B38D8E1F1C22182200F1CEB7 /* Assets.xcassets in Resources */,
+				B3D6F6051C693BF20029E4AF /* appPrev.gif in Resources */,
 				B35450911C66546E0057BF5F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +424,7 @@
 				B3E78C571C67A68C00A3E876 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

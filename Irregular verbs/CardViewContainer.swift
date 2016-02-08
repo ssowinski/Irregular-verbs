@@ -130,7 +130,7 @@ class CardViewContainer: UIView {
         switch gesture.state {
         case .Began:
             animator.removeAllBehaviors()
-            let offset = UIOffsetMake(locationInCard.x - CGRectGetMidX(card.bounds), locationInCard.y - CGRectGetMidY(card.bounds));
+            let offset = UIOffsetMake(locationInCard.x - card.bounds.midX, locationInCard.y - card.bounds.midY);
             attachmentBehavior = UIAttachmentBehavior(item: card, offsetFromCenter: offset, attachedToAnchor: locationInView)
             animator.addBehavior(attachmentBehavior)
         case .Changed:
