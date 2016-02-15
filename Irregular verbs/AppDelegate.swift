@@ -15,13 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        self.window = UIWindow()
+        window = UIWindow()
         
         //let wordsListViewController = WordsListViewController(verbsModel: VerbsModel())
         let wordsListViewController = WordsListViewController()
         let navigationViewController = UINavigationController(rootViewController : wordsListViewController)
-        self.window!.rootViewController = navigationViewController
-        self.window!.makeKeyAndVisible()
+        window!.rootViewController = navigationViewController
+        window!.makeKeyAndVisible()
         return true
     }
 

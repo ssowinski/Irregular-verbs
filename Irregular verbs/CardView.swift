@@ -39,25 +39,25 @@ class CardView : UIView {
     }
     
     private func configureView(){
-        self.backgroundColor = Const.Color.DarkOrange
-        self.layer.cornerRadius = Const.Size.CornerRadius
+        backgroundColor = Const.Color.DarkOrange
+        layer.cornerRadius = Const.Size.CornerRadius
         
-        let baseFormBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height/3))
+        let baseFormBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height/3))
         baseFormBackgroundView.backgroundColor = UIColor.whiteColor()
-        self.addSubview(baseFormBackgroundView)
+        addSubview(baseFormBackgroundView)
         
         baseFormLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         baseFormLabel.textColor = UIColor.blackColor()
         baseFormLabel.textAlignment = .Center
         baseFormLabel.adjustsFontSizeToFitWidth = true
         baseFormLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
-        baseFormLabel.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height/3)
+        baseFormLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height/3)
         baseFormBackgroundView.addSubview(baseFormLabel)
         
-        let pastTenseBackgroundView = UIView(frame: CGRect(x: 0, y: baseFormBackgroundView.frame.maxY, width: self.frame.width, height: self.frame.height/3))
+        let pastTenseBackgroundView = UIView(frame: CGRect(x: 0, y: baseFormBackgroundView.frame.maxY, width: frame.width, height: frame.height/3))
         pastTenseBackgroundView.backgroundColor = UIColor.whiteColor()
         pastTenseBackgroundView.alpha = Const.Size.Alpha05
-        self.addSubview(pastTenseBackgroundView)
+        addSubview(pastTenseBackgroundView)
         
         pastTenseLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         pastTenseLabel.textColor = Const.Color.DarkerGray //UIColor.grayColor()
@@ -73,8 +73,8 @@ class CardView : UIView {
         pastParticipleLabel.textAlignment = .Center
         pastParticipleLabel.adjustsFontSizeToFitWidth = true
         pastParticipleLabel.minimumScaleFactor = Const.Size.MinimumFontScaleFactor
-        pastParticipleLabel.frame = CGRect(x: 0, y: pastTenseBackgroundView.frame.maxY, width: self.frame.width, height: self.frame.height/3)
-        self.addSubview(pastParticipleLabel)
+        pastParticipleLabel.frame = CGRect(x: 0, y: pastTenseBackgroundView.frame.maxY, width: frame.width, height: frame.height/3)
+        addSubview(pastParticipleLabel)
     }
     
 }

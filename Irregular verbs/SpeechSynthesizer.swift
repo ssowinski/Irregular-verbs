@@ -13,7 +13,7 @@ class SpeechSynthesizer {
     private let avSpeechSynthesizer : AVSpeechSynthesizer
     
     init(){
-        self.avSpeechSynthesizer = AVSpeechSynthesizer()
+        avSpeechSynthesizer = AVSpeechSynthesizer()
     }
     
     func say(sentence: String){

@@ -124,9 +124,9 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: -ButtonShowMoreDelegate Implemantation (for cell button)
     func buttonAction(cell: VerbsTableViewCell) {
         if let indexPath = verbsTableView.indexPathForCell(cell) {
-            let cardViewContainer = CardViewContainer(frame: self.view.frame, startingIndex: indexPath.row)
+            let cardViewContainer = CardViewContainer(frame: view.frame, startingIndex: indexPath.row)
             cardViewContainer.delegat = self
-            self.view.addSubview(cardViewContainer)
+            view.addSubview(cardViewContainer)
         }
     }
     
@@ -143,6 +143,7 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: -UITableViewDataSource Implemantation
     
+    // number of sections is 1 by default
     //    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     //    {
     //        return 1

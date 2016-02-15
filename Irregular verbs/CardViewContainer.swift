@@ -34,9 +34,9 @@ class CardViewContainer: UIView {
     private var cardView : UIView?
     
     init(frame: CGRect, startingIndex: Int) {
-        self.currentIndex = startingIndex
+        currentIndex = startingIndex
         super.init(frame: frame)
-        self.animator = UIDynamicAnimator(referenceView: self)
+        animator = UIDynamicAnimator(referenceView: self)
         configureView()
     }
     
@@ -45,14 +45,14 @@ class CardViewContainer: UIView {
     }
     
     private func configureView(){
-        let alphaBackground = UIView(frame: self.frame)
+        let alphaBackground = UIView(frame: frame)
         alphaBackground.backgroundColor = UIColor.blackColor()
         alphaBackground.alpha = Const.Size.CardBackgroundAlpha
         addSubview(alphaBackground)
         
 //        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
 //        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = self.frame
+//        blurEffectView.frame = frame
 //        addSubview(blurEffectView)
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "tap:")
@@ -64,13 +64,13 @@ class CardViewContainer: UIView {
         
         addSubview(card)
         animator.removeAllBehaviors()
-        let snapBehaviour: UISnapBehavior = UISnapBehavior(item: card, snapToPoint: self.center) //CGPointMake(0, 0))
+        let snapBehaviour: UISnapBehavior = UISnapBehavior(item: card, snapToPoint: center) //CGPointMake(0, 0))
         animator.addBehavior(snapBehaviour)
         
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "pan:")
         card.addGestureRecognizer(panRecognizer)
         
-        self.cardView = card
+        cardView = card
     }
     
     private func dismissCardViewContainer() {
@@ -135,11 +135,11 @@ class CardViewContainer: UIView {
             animator.addBehavior(attachmentBehavior)
         case .Changed:
             attachmentBehavior.anchorPoint = locationInView
-//            card.center = CGPointMake(self.center.x + translation.x, self.center.y + translation.y)
+//            card.center = CGPointMake(center.x + translation.x, center.y + translation.y)
             //        gesture.setTranslation(CGPointZero, inView: self)
         case .Ended:
             animator.removeAllBehaviors()
-            let snapBehavior = UISnapBehavior(item: card, snapToPoint: self.center)
+            let snapBehavior = UISnapBehavior(item: card, snapToPoint: center)
             animator.addBehavior(snapBehavior)
             
             if translation.x > Const.Size.SwipeTranslatioToDismissCard && currentIndex + 1 < delegat?.cardsNumber(self) {

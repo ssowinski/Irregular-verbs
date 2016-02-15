@@ -88,8 +88,8 @@ class VerbsTableViewCell: UITableViewCell {
             })
             //             speakButton.backgroundColor = Con.ColorDarkBlue
         } else {
-            self.speakButton.hidden = true
-            self.showMoreButton.hidden = true
+            speakButton.hidden = true
+            showMoreButton.hidden = true
         }
     }
     
