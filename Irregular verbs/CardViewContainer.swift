@@ -14,9 +14,9 @@ protocol CardViewContainerDelegate: class {
     func cardForIndex(cardViewContainer : CardViewContainer, index: Int) -> UIView
 }
 
-private enum SwipeDirection {
-    case Left
-    case Right
+private enum SwipeDirection: Int{
+    case Left = 1
+    case Right = -1
 }
 
 class CardViewContainer: UIView {
@@ -109,7 +109,9 @@ class CardViewContainer: UIView {
                 card.removeFromSuperview()
                 
                 self.cardView = nil
-                swipeDir == .Left ? self.currentIndex-- : self.currentIndex++
+                self.currentIndex = self.currentIndex + swipeDir.rawValue
+//                swipeDir == .Left ? self.currentIndex++ : self.currentIndex--
+                
                 self.showCard(self.currentIndex, swipeDir: swipeDir)
         })
     }
@@ -142,11 +144,11 @@ class CardViewContainer: UIView {
             let snapBehavior = UISnapBehavior(item: card, snapToPoint: center)
             animator.addBehavior(snapBehavior)
             
-            if translation.x > Const.Size.SwipeTranslatioToDismissCard && currentIndex + 1 < delegat?.cardsNumber(self) {
+            if translation.x > Const.Size.SwipeTranslatioToDismissCard && currentIndex - 1 >= 0 {
                 dismissCard(card, swipeDir: .Right)
             }
             
-            if translation.x < -Const.Size.SwipeTranslatioToDismissCard && currentIndex - 1 >= 0 {
+            if translation.x < -Const.Size.SwipeTranslatioToDismissCard && currentIndex + 1 < delegat?.cardsNumber(self) {
                 dismissCard(card, swipeDir: .Left)
             }
         default: break
