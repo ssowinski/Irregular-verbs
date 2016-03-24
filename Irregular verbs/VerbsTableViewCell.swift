@@ -109,11 +109,12 @@ class VerbsTableViewCell: UITableViewCell {
         
         containerView.backgroundColor = Const.Color.DarkerGray
         speakButton.setImage(UIImage(named: Const.String.SpeakButtonImg), forState: UIControlState.Normal)
-        speakButton.addTarget(self, action: "speakButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        speakButton.addTarget(self, action: #selector(VerbsTableViewCell.speakButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         speakButton.hidden = true
         
         showMoreButton.setImage(UIImage(named: Const.String.ShowMoreButtonImg), forState: .Normal)
-        showMoreButton.addTarget(self, action: "showMoreAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        showMoreButton.addTarget(self, action: #selector(VerbsTableViewCell.showMoreAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        /// Use of string literal for Objective-C selectors is deprecated; use '#selector' instead
         showMoreButton.hidden = true
         
         //        speakButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)

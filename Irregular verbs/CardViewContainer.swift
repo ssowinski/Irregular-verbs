@@ -55,7 +55,7 @@ class CardViewContainer: UIView {
 //        blurEffectView.frame = frame
 //        addSubview(blurEffectView)
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "tap:")
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CardViewContainer.tap(_:)))
         alphaBackground.addGestureRecognizer(tapRecognizer)
     }
     
@@ -67,7 +67,7 @@ class CardViewContainer: UIView {
         let snapBehaviour: UISnapBehavior = UISnapBehavior(item: card, snapToPoint: center) //CGPointMake(0, 0))
         animator.addBehavior(snapBehaviour)
         
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: "pan:")
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(CardViewContainer.pan(_:)))
         card.addGestureRecognizer(panRecognizer)
         
         cardView = card
@@ -78,7 +78,7 @@ class CardViewContainer: UIView {
         
         if let card = cardView {
             let gravityBehaviour = UIGravityBehavior(items: [card])
-            gravityBehaviour.gravityDirection = CGVectorMake(Const.Size.GravityDownVexctorTuple);
+            gravityBehaviour.gravityDirection = CGVectorMake(Const.Size.GravityDownVexctorX, Const.Size.GravityDownVexctorY)
             animator.addBehavior(gravityBehaviour)
             
             let itemBehaviour = UIDynamicItemBehavior(items: [card])
@@ -99,7 +99,7 @@ class CardViewContainer: UIView {
         
         let gravityBehaviour = UIGravityBehavior(items: [card])
         let gravityVector = (swipeDir == .Left ? Const.Size.GravityLeftVexctorTuple : Const.Size.GravityRightVexctorTuple)
-        gravityBehaviour.gravityDirection = CGVectorMake(gravityVector);
+        gravityBehaviour.gravityDirection = CGVectorMake(gravityVector.0, gravityVector.1);
         animator.addBehavior(gravityBehaviour)
       
         UIView.animateWithDuration(Const.Size.AnimationDuration, animations: {

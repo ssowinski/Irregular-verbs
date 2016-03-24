@@ -43,7 +43,8 @@ struct Const {
         static let CardBackgroundAlpha : CGFloat = 0.6
         static let Alpha00 : CGFloat = 0.0
         static let Alpha05 : CGFloat = 0.5
-        static let GravityDownVexctorTuple : (CGFloat, CGFloat) = (0.0, 10.0)
+        static let GravityDownVexctorX : CGFloat = 0.0
+        static let GravityDownVexctorY : CGFloat = 10.0
         static let GravityLeftVexctorTuple : (CGFloat, CGFloat) = (-10.0, 0.0)
         static let GravityRightVexctorTuple : (CGFloat, CGFloat) = (10.0, 0.0)
         static let SwipeTranslatioToDismissCard : CGFloat = 100

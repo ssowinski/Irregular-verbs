@@ -47,10 +47,10 @@ class WordsListViewController: UIViewController, UITableViewDataSource, UITableV
     private func setupNavigationBar() {
         title = Const.String.VCTitle
         
-        let shuffleBarButton = UIBarButtonItem(image:UIImage(named: Const.String.ShuffleBarButtonImg), style: .Plain, target: self, action: "shuffleAction:")
+        let shuffleBarButton = UIBarButtonItem(image:UIImage(named: Const.String.ShuffleBarButtonImg), style: .Plain, target: self, action: #selector(WordsListViewController.shuffleAction(_:)))
         shuffleBarButton.tintColor = UIColor.whiteColor()
         
-        let sortBarButton = UIBarButtonItem(image: UIImage(named: Const.String.SortBarButtonImg), style: .Plain, target: self, action: "sortAction:")
+        let sortBarButton = UIBarButtonItem(image: UIImage(named: Const.String.SortBarButtonImg), style: .Plain, target: self, action: #selector(WordsListViewController.sortAction(_:)))
         sortBarButton.tintColor = UIColor.whiteColor()
         
         navigationItem.setRightBarButtonItems([sortBarButton, shuffleBarButton], animated: true)
